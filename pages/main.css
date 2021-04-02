@@ -1,0 +1,53 @@
+header,
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #6b5e62;
+  color: white;
+  height: 8em;
+}
+
+header a {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header a h1 {
+  margin: 0 10px 0 0;
+  /* line-height: 1; */
+}
+
+header a:hover {
+  color: white;
+}
+
+main {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.links-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.links-container a {
+  height: 6em;
+  margin: 10px;
+  position: relative;
+  color: #6b5e62;
+  border-bottom: 1px solid #6b5e62;
+}
+
+.links-container a i {
+  position: absolute;
+  bottom: 10px;
+  right: 0;
+}
+
+input {
+  max-width: 300px;
+}
