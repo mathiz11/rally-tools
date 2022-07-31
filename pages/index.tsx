@@ -5,7 +5,7 @@ import React from "react";
 
 export default function Home() {
   return (
-    <Layout title="Calculateur de Rallye" iconName="car">
+    <Layout title="Calculateur Rallye" iconName="car">
       <Container>
         <div className="links-container">
           <Link href="/tools/fuel">
