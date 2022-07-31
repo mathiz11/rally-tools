@@ -8,6 +8,12 @@ export default function Home() {
     <Layout title="Calculateur de Rallye" iconName="car">
       <Container>
         <div className="links-container">
+          <Link href="/tools/fuel">
+            <a>
+              <h2>Calulateur essence</h2>
+              <Icon name="arrow right" />
+            </a>
+          </Link>
           <Link href="/tools/wheel">
             <a>
               <h2>Vitesse roue</h2>
