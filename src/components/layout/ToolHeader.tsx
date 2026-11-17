@@ -3,7 +3,7 @@ import { Icon } from '../ui/Icon';
 import styles from './ToolHeader.module.css';
 
 interface ToolHeaderProps {
-  /** « OUTIL 01 » */
+  /** « OUTIL 01 » eyebrow */
   eyebrow: string;
   title: string;
   onReset: () => void;

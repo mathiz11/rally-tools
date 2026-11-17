@@ -5,9 +5,9 @@ import { ROUTES } from '../src/routes.ts';
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
 /**
- * Plugin de build minimal (aucune dépendance) :
- *  1. émet une page HTML par route (essence.html…) avec son <title> et sa description ;
- *  2. émet `sw.js`, un service worker qui précache tout le build pour un usage hors ligne.
+ * Minimal build plugin (no dependency):
+ *  1. emits one HTML page per route (essence.html…) with its <title> and description;
+ *  2. emits `sw.js`, a service worker that precaches the whole build for offline use.
  */
 export function rallyPwa(): Plugin {
   return {
@@ -30,7 +30,7 @@ export function rallyPwa(): Plugin {
         }
 
         const assets = Object.keys(bundle)
-          .filter((f) => f !== 'index.html' && !f.endsWith('.woff')) // woff2 suffit : les navigateurs modernes ignorent le repli woff
+          .filter((f) => f !== 'index.html' && !f.endsWith('.woff')) // woff2 is enough: modern browsers ignore the woff fallback
           .map((f) => `/${f}`);
         const urls = [...ROUTES.map((r) => r.path), ...assets, '/manifest.webmanifest', '/favicon.svg'];
         const version = createHash('sha1').update(html + assets.join()).digest('hex').slice(0, 10);

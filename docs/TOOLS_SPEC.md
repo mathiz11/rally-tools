@@ -1,103 +1,103 @@
-# Rally Tools — Spécification fonctionnelle des outils
+# Rally Tools — Functional specification of the tools
 
-Formules et logique extraites du code en production (bundles Next.js de rally-tools.vercel.app, novembre 2026), puis réécrites. Implémentation de référence testée : `src/lib/calculators.ts` (+ `calculators.test.ts`, 14 tests verts). **L'UI ne doit contenir aucune formule** : elle appelle ces fonctions.
+Formulas and logic extracted from the production code (Next.js bundles of rally-tools.vercel.app, November 2026), then rewritten. Tested reference implementation: `src/lib/calculators.ts` (+ `calculators.test.ts`, 14 tests green). **The UI must contain no formulas**: it calls these functions.
 
-Comportements communs aux 3 outils :
+Behaviors common to the 3 tools:
 
-- Calcul **en direct** à chaque saisie (pas de bouton « Calculer », plus de modale « Résultat / Quitter »).
-- Champs vides = 0 ou résultat « — » ; jamais d'erreur bloquante, jamais `NaN` / `Infinity` à l'écran.
-- Saisie décimale FR et EN acceptée (`14,2` et `14.2`) via `parseDecimal()`.
-- Affichage via `formatFr()`.
-- **Persistance locale** : l'état de chaque outil est sauvegardé dans `localStorage` (`rally-tools:v1:fuel`, `…:wheel`, `…:volumetric`), relu après le montage (pas pendant le SSR, pour éviter les écarts d'hydratation). Debounce 300 ms. Bouton « Réinitialiser » / « Valeurs par défaut » = efface la clé et remet les défauts.
-- Lien partageable (optionnel, P2) : sérialiser l'état dans les query params.
+- **Live** calculation on every input (no « Calculer » button, no more « Résultat / Quitter » modal).
+- Empty fields = 0 or result « — »; never a blocking error, never `NaN` / `Infinity` on screen.
+- FR and EN decimal input accepted (`14,2` and `14.2`) via `parseDecimal()`.
+- Display via `formatFr()`.
+- **Local persistence**: each tool's state is saved in `localStorage` (`rally-tools:v1:fuel`, `…:wheel`, `…:volumetric`), read after mount (not during SSR, to avoid hydration mismatches). 300 ms debounce. « Réinitialiser » / « Valeurs par défaut » button = clears the key and restores the defaults.
+- Shareable link (optional, P2): serialize the state into query params.
 
 ---
 
-## 01 — Essence (`/essence`, ancien `/tools/fuel`)
+## 01 — Fuel (`/essence`, formerly `/tools/fuel`)
 
-### Existant
-- Steppers : conso liaison (défaut 0,2, pas 0,01), conso spéciale (0,6, pas 0,01), nombre de spéciales (0, pas 1).
-- Bouton chevron (désactivé si une valeur = 0) qui génère la liste : Liaison, Spéciale, Liaison, …, Liaison. Bouton « + » sur une liaison obligatoire pour insérer une liaison optionnelle, corbeille pour la retirer.
-- Submit « Calculer » → `Σ(km liaison × conso liaison) + Σ(km spéciale × conso spéciale)`, affiché « X L ».
+### Existing
+- Steppers: link consumption (default 0.2, step 0.01), special-stage consumption (0.6, step 0.01), number of special stages (0, step 1).
+- Chevron button (disabled if a value = 0) that generates the list: Link, Special, Link, …, Link. « + » button on a mandatory link to insert an optional link, trash to remove it.
+- « Calculer » submit → `Σ(link km × link consumption) + Σ(special km × special consumption)`, displayed as « X L ».
 
-### Nouveau comportement
-Écran mobile, de haut en bas (artboard *Essence — mobile*) :
+### New behavior
+Mobile screen, top to bottom (artboard *Essence — mobile*):
 
-| Bloc | Détail |
+| Block | Detail |
 |---|---|
-| Carte « Consommations » | Deux **StepperRow** pleine largeur, l'une sous l'autre (jamais côte à côte) : **Liaison** (L/km, défaut **0,20**, aide « ≈ 20 L/100 km ») puis **Spéciale** (défaut **0,60**). Pas 0,01, min 0, appui long = défilement, valeur tapable directement. |
-| Carte « Roadbook » | Pré-rempli avec **2 spéciales** (`buildSegments(2)`) : Départ → Liaison 1 → ES 1 → Liaison 2 → ES 2 → Liaison 3 → Arrivée. Compteur « n ES · total km » dans l'en-tête. |
-| Ligne | Puce + litres de la ligne, champ km (pas libre, décimal), une action : « + » sur liaison obligatoire (`insertLink`), corbeille sur liaison optionnelle (`removeLink`), corbeille sur ES (`removeStage` : retire l'ES **et** la liaison suivante). |
-| « + Ajouter une spéciale » | Bouton pleine largeur sous l'arrivée (`addStage`) : ajoute ES + liaison en fin de roadbook. **Remplace le stepper « nombre de spéciales »** de l'existant (et son bouton chevron). |
-| Carte « Marge de sécurité » | **Nouveau.** Segmenté 0 / 5 / 10 / 15 %, défaut 10 %. |
-| Carte « Détail » | Barre de répartition, liaisons (km, L), spéciales (km, L), marge (+ L), total sans marge (2 déc.). |
-| ResultBar | « À embarquer · marge 10 % » → total **avec marge** (1 déc.) ; à droite « Arrondi N L » (litre supérieur). |
+| « Consommations » card | Two full-width **StepperRows**, one below the other (never side by side): **Liaison** (L/km, default **0.20**, help « ≈ 20 L/100 km ») then **Spéciale** (default **0.60**). Step 0.01, min 0, long press = auto-repeat, value directly typeable. |
+| « Roadbook » card | Pre-filled with **2 special stages** (`buildSegments(2)`): Start → Link 1 → SS 1 → Link 2 → SS 2 → Link 3 → Finish. Counter « n ES · total km » in the header. |
+| Row | Chip + liters for the row, km field (free step, decimal), one action: « + » on a mandatory link (`insertLink`), trash on an optional link (`removeLink`), trash on an SS (`removeStage`: removes the SS **and** the following link). |
+| « + Ajouter une spéciale » | Full-width button below the finish (`addStage`): adds SS + link at the end of the roadbook. **Replaces the « number of special stages » stepper** of the existing site (and its chevron button). |
+| « Marge de sécurité » card | **New.** Segmented 0 / 5 / 10 / 15 %, default 10 %. |
+| « Détail » card | Breakdown bar, links (km, L), special stages (km, L), margin (+ L), total without margin (2 decimals). |
+| ResultBar | « À embarquer · marge 10 % » → total **with margin** (1 decimal); on the right « Arrondi N L » (rounded up to the next liter). |
 
-Numérotation : liaisons et ES numérotées séparément dans l'ordre d'apparition (`segmentLabels`) ; une liaison ajoutée décale les suivantes. Supprimer toutes les ES laisse au moins une liaison.
+Numbering: links and SSs are numbered separately in order of appearance (`segmentLabels`); an added link shifts the following ones. Removing all SSs leaves at least one link.
 
-### Formule
+### Formula
 ```
-L = Σ km_liaison × conso_liaison + Σ km_ES × conso_ES
-L_marge = L × (1 + marge/100)
-arrondi = ceil(L_marge)
+L = Σ km_link × consumption_link + Σ km_SS × consumption_SS
+L_margin = L × (1 + margin/100)
+rounded = ceil(L_margin)
 ```
-Cas de test (maquette) : conso 0,20 / 0,60, km [12, 8,4, 25, 14,2, 18], marge 10 % → 24,56 L, **27,0 L**, arrondi **28 L**.
+Test case (mockup): consumption 0.20 / 0.60, km [12, 8.4, 25, 14.2, 18], margin 10 % → 24.56 L, **27.0 L**, rounded **28 L**.
 
 ---
 
-## 02 — Vitesse roue (`/vitesse-roue`, ancien `/tools/wheel`)
+## 02 — Wheel speed (`/vitesse-roue`, formerly `/tools/wheel`)
 
-### Existant
-Formulaire Formik (tous champs requis) : Vitesse moteur 9600, Z1 20, Z2 25, Z3 11, Z4 50, Diamètre roue 650 → modale « X km/h ».
+### Existing
+Formik form (all fields required): Engine speed 9600, Z1 20, Z2 25, Z3 11, Z4 50, Wheel diameter 650 → modal « X km/h ».
 ```
 v = speed × (z1/z2) × (z3/z4) × (diameter − 20) × π × 6e-5
 ```
 
-### Nouveau comportement
-| Champ | Unité | Défaut | Note UI |
+### New behavior
+| Field | Unit | Default | UI note |
 |---|---|---|---|
-| Régime moteur | tr/min | 9600 | **StepperRow** (− / + de 100, appui long, valeur tapable) + **slider** pleine largeur 1 000 → 12 000, synchronisés |
-| Z1 · pignon menant | dents | 20 | groupe « Boîte · rapport engagé », affiche Z1/Z2 = 0,800 |
-| Z2 · pignon mené | dents | 25 | |
-| Z3 · pignon d'attaque | dents | 11 | groupe « Pont · couple final », affiche Z3/Z4 = 0,220 |
-| Z4 · couronne | dents | 50 | |
-| Diamètre roue | mm | 650 | pneu monté |
-| Écrasement | mm | **20** | **nouveau champ** : c'était le `− 20` codé en dur. Aide : « Diamètre utile = … mm » |
+| Engine speed (Régime moteur) | rpm | 9600 | **StepperRow** (− / + by 100, long press, typeable value) + full-width **slider** 1,000 → 12,000, synchronized |
+| Z1 · driving gear | teeth | 20 | « Boîte · rapport engagé » group, shows Z1/Z2 = 0.800 |
+| Z2 · driven gear | teeth | 25 | |
+| Z3 · pinion | teeth | 11 | « Pont · couple final » group, shows Z3/Z4 = 0.220 |
+| Z4 · crown wheel | teeth | 50 | |
+| Wheel diameter | mm | 650 | mounted tyre |
+| Squash (Écrasement) | mm | **20** | **new field**: this was the hard-coded `− 20`. Help: « Diamètre utile = … mm » |
 
-> Libellés Z1–Z4 (boîte menant / mené, pont attaque / couronne) validés par Mathis.
+> Z1–Z4 labels (gearbox driving / driven, final drive pinion / crown wheel) approved by Mathis.
 
-Écran mobile : cartes Régime → Boîte (Z1 | Z2 sur une ligne, ratio dans l'en-tête) → Pont (Z3 | Z4) → Roue (Ø | écrasement, diamètre utile et circonférence en aide) → Par régime (table 4 000 → 11 000, ligne du régime courant ± 500 en jaune, rapport global dans l'en-tête, formule).
-ResultBar : « À 9 600 tr/min » → vitesse (1 déc.) km/h ; à droite km/h pour 1 000 tr/min.
-Z2 ou Z4 = 0, ou diamètre utile ≤ 0 → « — » (la fonction renvoie `null`).
+Mobile screen: cards Engine speed → Gearbox (Z1 | Z2 on one row, ratio in the header) → Final drive (Z3 | Z4) → Wheel (Ø | squash, effective diameter and circumference as help) → Per rpm (table 4,000 → 11,000, current rpm row ± 500 in yellow, overall ratio in the header, formula).
+ResultBar: « À 9 600 tr/min » → speed (1 decimal) km/h; on the right km/h per 1,000 rpm.
+Z2 or Z4 = 0, or effective diameter ≤ 0 → « — » (the function returns `null`).
 
-Cas de test : défauts → **200,64 km/h** (affiché 200,6), rapport global 0,176, ≈ 20,9 km/h / 1 000 tr/min.
+Test case: defaults → **200.64 km/h** (displayed 200.6), overall ratio 0.176, ≈ 20.9 km/h per 1,000 rpm.
 
 ---
 
-## 03 — Volumétrique (`/volumetrique`, ancien `/tools/volumetric`)
+## 03 — Volumetric (`/volumetrique`, formerly `/tools/volumetric`)
 
-### Existant — bug confirmé
-Champs « Diamètre roue » et « Hauteur », résultat en « cc » :
+### Existing — confirmed bug
+Fields « Diamètre roue » and « Hauteur », result in « cc »:
 ```
-π × √diameter / 4 × height      ← racine carrée au lieu du carré
+π × √diameter / 4 × height      ← square root instead of square
 ```
-Avec 86 / 86 cela donne ≈ 626 « cc », ce qui ne correspond à aucun volume physique. Le libellé « Diamètre roue » est vraisemblablement un copier-coller de l'outil 02.
+With 86 / 86 this gives ≈ 626 « cc », which matches no physical volume. The « Diamètre roue » label is probably a copy-paste from tool 02.
 
-### Nouveau comportement (cylindrée moteur — validé)
-| Champ | Unité | Défaut |
+### New behavior (engine displacement — approved)
+| Field | Unit | Default |
 |---|---|---|
-| Alésage | mm | 86 |
-| Course | mm | 86 |
-| Nombre de cylindres | segmenté 1·2·3·4·5·6·8 | 4 |
-| Volume de chambre (optionnel) | cm³ par cylindre | 50 dans la maquette, vide par défaut en prod |
+| Bore (Alésage) | mm | 86 |
+| Stroke (Course) | mm | 86 |
+| Number of cylinders | segmented 1·2·3·4·5·6·8 | 4 |
+| Chamber volume (optional) | cm³ per cylinder | 50 in the mockup, empty by default in prod |
 
 ```
-V_unitaire [cm³] = π × alésage² / 4 × course / 1000
-V_totale = V_unitaire × cylindres
-ε (rapport volumétrique) = (V_unitaire + V_chambre) / V_chambre
-course/alésage < 0,95 → super-carré · 0,95–1,05 → carré · > 1,05 → longue course
+V_unit [cm³] = π × bore² / 4 × stroke / 1000
+V_total = V_unit × cylinders
+ε (compression ratio) = (V_unit + V_chamber) / V_chamber
+stroke/bore < 0.95 → oversquare · 0.95–1.05 → square · > 1.05 → long stroke
 ```
-Écran mobile : carte Cylindre (alésage | course, cylindres en segmenté 4 colonnes : 1·2·3·4 / 5·6·8) → carte Chambre (optionnel) → carte Détail (petit schéma SVG + unitaire 1 déc., section piston cm² 2 déc., litres 2 déc., course/alésage + forme moteur) → formule.
-ResultBar : « Cylindrée · 4 cyl. » → total cm³ (0 déc.) ; à droite rapport volumétrique « 11,0 : 1 » ou « — ».
+Mobile screen: Cylinder card (bore | stroke, cylinders as 4-column segmented: 1·2·3·4 / 5·6·8) → Chamber card (optional) → Detail card (small SVG diagram + unit volume 1 decimal, piston area cm² 2 decimals, liters 2 decimals, stroke/bore + engine shape) → formula.
+ResultBar: « Cylindrée · 4 cyl. » → total cm³ (0 decimals); on the right compression ratio « 11,0 : 1 » or « — ».
 
-Cas de test : 86 × 86 × 4 → **1 998 cm³** (499,6 unitaire) ; chambre 50 cm³ → **11,0 : 1**.
+Test case: 86 × 86 × 4 → **1,998 cm³** (499.6 per cylinder); chamber 50 cm³ → **11.0 : 1**.

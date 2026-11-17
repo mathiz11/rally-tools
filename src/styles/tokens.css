@@ -1,62 +1,62 @@
 /* =====================================================================
-   Rally Tools — design tokens « Roadbook »
-   À importer une seule fois (ex. app/globals.css). Thème sombre unique.
-   Polices à charger via next/font/google :
+   Rally Tools — « Roadbook » design tokens
+   Import once (e.g. app/globals.css). Single dark theme.
+   Fonts to load via next/font/google:
      Barlow (400, 500, 600, 700)
      Barlow Condensed (600, 700, 800 + italic 700, 800)
      JetBrains Mono (400, 500, 700)
-   et à exposer dans les variables --font-* ci-dessous.
+   and to expose in the --font-* variables below.
    ===================================================================== */
 
 :root {
   color-scheme: dark;
 
-  /* ---- Couleurs : fonds ---- */
-  --bg: #0b0c0e;            /* asphalte — fond de page */
-  --surface: #131519;       /* cartes, panneaux */
-  --surface-2: #1c1f25;     /* boutons ronds, puces, pistes de barres */
-  --line: #2a2e36;          /* séparateurs, bordures de carte */
-  --line-strong: #3a3f49;   /* bordure de champ, bouton secondaire */
+  /* ---- Colors: backgrounds ---- */
+  --bg: #0b0c0e;            /* asphalt — page background */
+  --surface: #131519;       /* cards, panels */
+  --surface-2: #1c1f25;     /* round buttons, chips, bar tracks */
+  --line: #2a2e36;          /* separators, card borders */
+  --line-strong: #3a3f49;   /* field border, secondary button */
   --line-hover: #4a505c;
 
-  /* ---- Couleurs : texte ---- */
-  --text: #f2f0ea;          /* principal (≈ 17:1 sur --bg) */
-  --text-2: #c9ccd2;        /* secondaire */
-  --text-3: #9aa0aa;        /* tertiaire, unités, labels mono (≈ 7:1 sur --bg) */
-  --placeholder: #5e6470;   /* placeholder uniquement, jamais pour du texte utile */
+  /* ---- Colors: text ---- */
+  --text: #f2f0ea;          /* primary (≈ 17:1 on --bg) */
+  --text-2: #c9ccd2;        /* secondary */
+  --text-3: #9aa0aa;        /* tertiary, units, mono labels (≈ 7:1 on --bg) */
+  --placeholder: #5e6470;   /* placeholder only, never for useful text */
 
-  /* ---- Couleurs : sémantique ---- */
-  --accent: #ffc81e;        /* jaune rallye : résultat, CTA, focus, état actif */
+  /* ---- Colors: semantic ---- */
+  --accent: #ffc81e;        /* rally yellow: result, CTA, focus, active state */
   --accent-hover: #ffd95c;
-  --on-accent: #0b0c0e;     /* texte sur jaune */
-  --stage: #ff6a2b;         /* spéciale (ES) */
+  --on-accent: #0b0c0e;     /* text on yellow */
+  --stage: #ff6a2b;         /* special stage (ES) */
   --on-stage: #0b0c0e;
-  --link: #8fa3b8;          /* liaison */
+  --link: #8fa3b8;          /* link */
   --focus-ring: rgba(255, 200, 30, 0.28);
 
-  /* ---- Typographie ---- */
+  /* ---- Typography ---- */
   --font-display: var(--font-barlow-condensed, 'Barlow Condensed'), 'Arial Narrow', sans-serif;
   --font-body: var(--font-barlow, 'Barlow'), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains, 'JetBrains Mono'), ui-monospace, monospace;
 
-  --fs-hero: 52px;          /* H1 accueil */
-  --fs-screen-title: 26px;  /* titre dans le header d'outil */
-  --fs-card-title: 20px;    /* titres de carte (condensed, uppercase) */
-  --fs-setting: 18px;       /* label de StepperRow */
-  --fs-tool-row: 24px;      /* titre des lignes-outils de l'accueil */
+  --fs-hero: 52px;          /* home H1 */
+  --fs-screen-title: 26px;  /* title in the tool header */
+  --fs-card-title: 20px;    /* card titles (condensed, uppercase) */
+  --fs-setting: 18px;       /* StepperRow label */
+  --fs-tool-row: 24px;      /* title of the home tool rows */
   --fs-tab: 13px;
   --fs-lead: 16px;
   --fs-body: 16px;
   --fs-small: 14px;
-  --fs-micro: 12px;         /* eyebrow mono, unités */
-  --fs-result: 36px;        /* chiffre de la ResultBar */
-  --fs-input-lg: 28px;      /* valeur de StepperRow */
-  --fs-input: 22px;         /* champs ; jamais < 16px (zoom iOS) */
+  --fs-micro: 12px;         /* mono eyebrow, units */
+  --fs-result: 36px;        /* ResultBar number */
+  --fs-input-lg: 28px;      /* StepperRow value */
+  --fs-input: 22px;         /* fields; never < 16px (iOS zoom) */
 
   --tracking-label: 0.06em;
   --tracking-eyebrow: 0.12em;
 
-  /* ---- Espacements (base 4) ---- */
+  /* ---- Spacing (base 4) ---- */
   --sp-1: 4px;
   --sp-2: 8px;
   --sp-3: 12px;
@@ -70,34 +70,34 @@
   --sp-20: 80px;
   --sp-24: 96px;
 
-  /* ---- Rayons ---- */
-  --r-xs: 4px;   /* plaques « OUTIL 01 » */
-  --r-sm: 6px;   /* puces Liaison/ES, logo */
-  --r-md: 8px;   /* segments, petits boutons */
-  --r-lg: 10px;  /* champs, boutons */
-  --r-xl: 12px;  /* sous-cartes */
-  --r-2xl: 16px; /* cartes, panneaux */
+  /* ---- Radii ---- */
+  --r-xs: 4px;   /* « OUTIL 01 » plates */
+  --r-sm: 6px;   /* Link/SS chips, logo */
+  --r-md: 8px;   /* segments, small buttons */
+  --r-lg: 10px;  /* fields, buttons */
+  --r-xl: 12px;  /* sub-cards */
+  --r-2xl: 16px; /* cards, panels */
 
   /* ---- Layout (mobile first) ---- */
-  --app-max: 560px;      /* largeur max de la colonne d'app, desktop compris */
+  --app-max: 560px;      /* max width of the app column, desktop included */
   --gutter: 16px;
-  --touch: 48px;         /* cible tactile minimale */
-  --stepper-btn-w: 72px; /* boutons − / + */
-  --stepper-h: 60px;     /* hauteur StepperRow et champs principaux */
-  --field-h: 56px;       /* champs secondaires (Z1…Z4, roadbook) */
+  --touch: 48px;         /* minimum touch target */
+  --stepper-btn-w: 72px; /* − / + buttons */
+  --stepper-h: 60px;     /* StepperRow and main field height */
+  --field-h: 56px;       /* secondary fields (Z1…Z4, roadbook) */
   --segment-h: 52px;
   --header-h: 60px;
   --tabbar-h: 58px;      /* + env(safe-area-inset-bottom) */
   --resultbar-h: 76px;
-  --r-btn: 14px;         /* boutons − / +, ResultBar */
+  --r-btn: 14px;         /* − / + buttons, ResultBar */
 
-  /* ---- Mouvement ---- */
+  /* ---- Motion ---- */
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --dur-fast: 120ms;
   --dur: 180ms;
 }
 
-/* Desktop : on ne change que les marges, la colonne reste à --app-max */
+/* Desktop: only the margins change, the column stays at --app-max */
 @media (min-width: 768px) {
   :root {
     --gutter: 24px;
@@ -148,18 +148,18 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Chiffres alignés partout où on affiche des valeurs */
+/* Tabular digits everywhere values are displayed */
 .num {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
 
-/* Bande damier (header/footer, départ/arrivée) */
+/* Checkerboard strip (header/footer, start/finish) */
 .checker {
   background: repeating-conic-gradient(var(--text) 0 25%, var(--bg) 0 50%) 0 0 / 12px 12px;
 }
 
-/* Masquer les spinners natifs : on utilise des champs texte inputmode="decimal" */
+/* Hide native spinners: we use inputmode="decimal" text fields */
 input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;

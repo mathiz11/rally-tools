@@ -3,7 +3,7 @@ import styles from './Card.module.css';
 
 interface CardProps {
   title: string;
-  /** Texte mono à droite du titre (compteur, rapport…). */
+  /** Mono text to the right of the title (counter, ratio…). */
   aside?: ComponentChildren;
   children: ComponentChildren;
 }

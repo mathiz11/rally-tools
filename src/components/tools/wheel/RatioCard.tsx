@@ -11,7 +11,7 @@ interface Props {
   b: { id: string; label: string; value: number; onChange: (v: number) => void; error?: string };
 }
 
-/** Deux nombres de dents (menant | mené) sur une ligne, rapport dans l'en-tête de carte. */
+/** Two tooth counts (driving | driven) on one row, ratio in the card header. */
 export function RatioCard({ title, ratio, ratioLabel, a, b }: Props) {
   return (
     <Card title={title} aside={`${ratioLabel} = ${ratio === null ? '—' : fr(ratio, 3)}`}>

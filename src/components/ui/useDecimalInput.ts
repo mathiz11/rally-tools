@@ -4,9 +4,9 @@ import { parseDecimal } from '../../lib/calculators';
 import { rawFr } from '../../lib/format';
 
 /**
- * Champ décimal « vrai champ texte » (inputmode decimal) : accepte 14,2 et 14.2, n'écrase jamais
- * la saisie en cours (« 14, » reste « 14, »), affiche la valeur formatée hors focus.
- * Vide = null ; négatif ramené à 0.
+ * Decimal field as a « real text field » (inputmode decimal): accepts 14,2 and 14.2, never overwrites
+ * the input in progress (« 14, » stays « 14, »), shows the formatted value when unfocused.
+ * Empty = null; negative clamped to 0.
  */
 export function useDecimalInput(
   value: number | null,
@@ -16,7 +16,7 @@ export function useDecimalInput(
   const [focused, setFocused] = useState(false);
   const [text, setText] = useState('');
 
-  // La saisie reste affichée tant qu'elle correspond à la valeur ; sinon (pas −/+, reset) on resynchronise.
+  // The typed text stays displayed as long as it matches the value; otherwise (−/+ step, reset) we resync.
   const inSync = (parseDecimal(text) ?? 0) === (value ?? 0);
   const shown = focused ? (inSync ? text : rawFr(value)) : value === null ? '' : format(value);
 

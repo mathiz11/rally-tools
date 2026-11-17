@@ -1,6 +1,6 @@
 /**
- * Source unique des routes : utilisée par le routeur, la TabBar et le build
- * (pages HTML par route avec leur <title>/<meta description>, précache hors-ligne).
+ * Single source of routes: used by the router, the TabBar and the build
+ * (one HTML page per route with its <title>/<meta description>, offline precache).
  */
 export interface RouteMeta {
   path: string;
@@ -31,7 +31,7 @@ export const ROUTES: RouteMeta[] = [
   },
 ];
 
-/** Anciennes URL (Next.js) → nouvelles. Dupliqué dans vercel.json (redirections 308). */
+/** Legacy URLs (Next.js) → new ones. Duplicated in vercel.json (308 redirects). */
 export const LEGACY_REDIRECTS: Record<string, string> = {
   '/tools/fuel': '/essence',
   '/tools/wheel': '/vitesse-roue',

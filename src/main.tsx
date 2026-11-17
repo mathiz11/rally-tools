@@ -20,7 +20,7 @@ render(<App />, document.getElementById('app')!);
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').catch(() => {
-      /* hors ligne indisponible, l'app reste utilisable */
+      /* offline unavailable, the app stays usable */
     });
   });
 }

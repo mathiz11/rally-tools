@@ -4,9 +4,9 @@ export interface WheelState {
   z2: number;
   z3: number;
   z4: number;
-  /** Diamètre de roue (pneu monté), mm. */
+  /** Wheel diameter (mounted tyre), mm. */
   diameter: number;
-  /** Écrasement du pneu, mm (le « − 20 » historique). */
+  /** Tyre squash, mm (the historical « − 20 »). */
   crush: number;
 }
 

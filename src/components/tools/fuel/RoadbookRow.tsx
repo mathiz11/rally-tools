@@ -16,7 +16,7 @@ interface Props {
   onRemoveStage: () => void;
 }
 
-/** Une ligne du roadbook : puce + litres · champ km · une seule action (+ / corbeille). */
+/** One roadbook row: chip + liters · km field · a single action (+ / trash). */
 export function RoadbookRow({ segment, label, liters, onKm, onInsertLink, onRemoveLink, onRemoveStage }: Props) {
   const isStage = segment.kind === 'stage';
   return (

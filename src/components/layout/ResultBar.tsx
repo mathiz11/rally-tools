@@ -1,16 +1,16 @@
 import styles from './ResultBar.module.css';
 
 interface ResultBarProps {
-  /** « À embarquer · marge 10 % » */
+  /** « À embarquer · marge 10 % » eyebrow */
   eyebrow: string;
-  /** Valeur déjà formatée, ou « — ». */
+  /** Already formatted value, or « — ». */
   value: string;
   unit: string;
-  /** Info secondaire à droite. */
+  /** Secondary info on the right. */
   side?: { value: string; caption: string };
 }
 
-/** Le résultat est le héros : un seul chiffre jaune, toujours visible, annoncé aux lecteurs d'écran. */
+/** The result is the hero: a single yellow number, always visible, announced to screen readers. */
 export function ResultBar({ eyebrow, value, unit, side }: ResultBarProps) {
   return (
     <div class={styles.bar} aria-live="polite" aria-atomic="true">

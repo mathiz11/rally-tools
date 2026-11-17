@@ -14,29 +14,29 @@ import {
 } from './calculators';
 
 describe('parseDecimal', () => {
-  it('accepte la virgule et le point', () => {
+  it('accepts comma and dot', () => {
     expect(parseDecimal('14,2')).toBe(14.2);
     expect(parseDecimal('14.2')).toBe(14.2);
     expect(parseDecimal(' 1 250 ')).toBe(1250);
   });
-  it('retourne null pour une saisie vide ou invalide', () => {
+  it('returns null for empty or invalid input', () => {
     expect(parseDecimal('')).toBeNull();
     expect(parseDecimal('abc')).toBeNull();
     expect(parseDecimal(undefined)).toBeNull();
   });
 });
 
-describe('Essence', () => {
+describe('Fuel', () => {
   let i = 0;
   const id = () => `s${i++}`;
 
-  it('construit Liaison/ES alternés avec une liaison de plus que de spéciales', () => {
+  it('builds alternating Link/SS with one more link than special stages', () => {
     const segs = buildSegments(2, [], id);
     expect(segs.map((s) => s.kind)).toEqual(['liaison', 'stage', 'liaison', 'stage', 'liaison']);
     expect(buildSegments(0, [], id).map((s) => s.kind)).toEqual(['liaison']);
   });
 
-  it('conserve les km existants quand on ajoute une spéciale et retire les liaisons optionnelles', () => {
+  it('keeps existing km when adding a special stage and removes optional links', () => {
     const base = buildSegments(1, [], id);
     base[0].km = 10;
     base[1].km = 5;
@@ -46,7 +46,7 @@ describe('Essence', () => {
     expect(next.map((s) => s.km)).toEqual([10, 5, 7, null, null]);
   });
 
-  it('exemple de la maquette : 24,56 L, 27,016 L avec 10 %, arrondi 28 L', () => {
+  it('mockup example: 24.56 L, 27.016 L with 10 %, rounded 28 L', () => {
     const segments = buildSegments(2, [], id);
     [12, 8.4, 25, 14.2, 18].forEach((km, k) => (segments[k].km = km));
     const r = computeFuel({ linkConsumption: 0.2, stageConsumption: 0.6, segments, marginPercent: 10 });
@@ -60,7 +60,7 @@ describe('Essence', () => {
     expect(r.perSegment[1]).toBeCloseTo(5.04, 6);
   });
 
-  it('ajout / suppression d’ES et de liaisons optionnelles', () => {
+  it('adding / removing SSs and optional links', () => {
     let segs = buildSegments(1, [], id); // L ES L
     segs = addStage(segs, id); // L ES L ES L
     expect(segs.map((s) => s.kind)).toEqual(['liaison', 'stage', 'liaison', 'stage', 'liaison']);
@@ -69,24 +69,24 @@ describe('Essence', () => {
     const es1 = segs[2].id;
     segs = removeStage(segs, es1); // L Lopt ES L
     expect(segs.map((s) => s.kind)).toEqual(['liaison', 'liaison', 'stage', 'liaison']);
-    segs = removeLink(segs, segs[0].id); // liaison obligatoire : inchangé
+    segs = removeLink(segs, segs[0].id); // mandatory link: unchanged
     expect(segs).toHaveLength(4);
-    segs = removeLink(segs, segs[1].id); // optionnelle : supprimée
+    segs = removeLink(segs, segs[1].id); // optional: removed
     expect(segs.map((s) => s.kind)).toEqual(['liaison', 'stage', 'liaison']);
     expect(addStage([], id).map((s) => s.kind)).toEqual(['liaison', 'stage', 'liaison']);
   });
 
-  it('les champs vides comptent pour 0', () => {
+  it('empty fields count as 0', () => {
     const r = computeFuel({ linkConsumption: 0.2, stageConsumption: 0.6, segments: buildSegments(1, [], id), marginPercent: 0 });
     expect(r.liters).toBe(0);
     expect(r.litersRoundedUp).toBe(0);
   });
 });
 
-describe('Vitesse roue', () => {
+describe('Wheel speed', () => {
   const defaults = { rpm: 9600, z1: 20, z2: 25, z3: 11, z4: 50, wheelDiameterMm: 650, tyreCrushMm: 20 };
 
-  it('valeurs par défaut historiques → 200,64 km/h (identique à l’existant, affiché 200,6)', () => {
+  it('historical default values → 200.64 km/h (same as the existing site, displayed 200.6)', () => {
     const r = computeWheelSpeed(defaults);
     expect(Number(r.kmh!.toFixed(2))).toBe(200.64);
     expect(r.overallRatio).toBeCloseTo(0.176, 6);
@@ -94,17 +94,17 @@ describe('Vitesse roue', () => {
     expect(r.circumferenceM).toBeCloseTo(1.979, 3);
   });
 
-  it('écrasement par défaut = 20 mm', () => {
+  it('default squash = 20 mm', () => {
     const { tyreCrushMm, ...rest } = defaults;
     expect(computeWheelSpeed(rest).kmh).toBeCloseTo(computeWheelSpeed(defaults).kmh!, 9);
   });
 
-  it('Z2 ou Z4 à 0 → résultat null, pas Infinity', () => {
+  it('Z2 or Z4 at 0 → null result, not Infinity', () => {
     expect(computeWheelSpeed({ ...defaults, z2: 0 }).kmh).toBeNull();
     expect(computeWheelSpeed({ ...defaults, z4: 0 }).kmh).toBeNull();
   });
 
-  it('table par régime', () => {
+  it('per-rpm table', () => {
     const t = wheelSpeedTable(defaults);
     expect(t).toHaveLength(8);
     expect(t[0].rpm).toBe(4000);
@@ -112,8 +112,8 @@ describe('Vitesse roue', () => {
   });
 });
 
-describe('Volumétrique', () => {
-  it('86 × 86 mm, 4 cylindres → ≈ 1 998 cm³', () => {
+describe('Volumetric', () => {
+  it('86 × 86 mm, 4 cylinders → ≈ 1,998 cm³', () => {
     const r = computeDisplacement({ boreMm: 86, strokeMm: 86, cylinders: 4 });
     expect(r.unitCc).toBeCloseTo(499.56, 2);
     expect(Math.round(r.totalCc)).toBe(1998);
@@ -121,12 +121,12 @@ describe('Volumétrique', () => {
     expect(r.compressionRatio).toBeNull();
   });
 
-  it('rapport volumétrique avec chambre de 50 cm³ ≈ 10,99 : 1', () => {
+  it('compression ratio with a 50 cm³ chamber ≈ 10.99 : 1', () => {
     const r = computeDisplacement({ boreMm: 86, strokeMm: 86, cylinders: 4, chamberCc: 50 });
     expect(r.compressionRatio!).toBeCloseTo(10.99, 2);
   });
 
-  it('forme moteur', () => {
+  it('engine shape', () => {
     expect(computeDisplacement({ boreMm: 90, strokeMm: 80, cylinders: 4 }).engineShape).toBe('super-carré');
     expect(computeDisplacement({ boreMm: 80, strokeMm: 90, cylinders: 4 }).engineShape).toBe('longue course');
   });

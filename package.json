@@ -26,5 +26,5 @@
   "engines": {
     "node": ">=20"
   },
-  "description": "Calculateurs de rallye : essence, vitesse roue, cylindrée."
+  "description": "Rally calculators: fuel, wheel speed, displacement."
 }

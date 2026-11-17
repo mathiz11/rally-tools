@@ -1,14 +1,14 @@
 /**
- * Rally Tools — fonctions de calcul pures (aucune dépendance UI).
- * Source de vérité des formules : voir TOOLS_SPEC.md.
- * Toutes les fonctions acceptent des nombres déjà parsés (voir parseDecimal).
+ * Rally Tools — pure calculation functions (no UI dependency).
+ * Source of truth for the formulas: see TOOLS_SPEC.md.
+ * All functions accept already-parsed numbers (see parseDecimal).
  */
 
 /* ------------------------------------------------------------------ */
-/* Utilitaires                                                         */
+/* Utilities                                                           */
 /* ------------------------------------------------------------------ */
 
-/** Parse une saisie utilisateur FR ou EN ("14,2", "14.2", " 14 ") → number | null. */
+/** Parses a FR or EN user input ("14,2", "14.2", " 14 ") → number | null. */
 export function parseDecimal(raw: string | number | null | undefined): number | null {
   if (raw === null || raw === undefined) return null;
   if (typeof raw === 'number') return Number.isFinite(raw) ? raw : null;
@@ -18,7 +18,7 @@ export function parseDecimal(raw: string | number | null | undefined): number | 
   return Number.isFinite(n) ? n : null;
 }
 
-/** Formate un nombre en français (virgule décimale, espace fine insécable pour les milliers). */
+/** Formats a number in French style (decimal comma, narrow no-break space for thousands). */
 export function formatFr(value: number, decimals: number): string {
   if (!Number.isFinite(value)) return '—';
   return value.toLocaleString('fr-FR', {
@@ -28,7 +28,7 @@ export function formatFr(value: number, decimals: number): string {
 }
 
 /* ------------------------------------------------------------------ */
-/* 01 — Essence                                                        */
+/* 01 — Fuel                                                           */
 /* ------------------------------------------------------------------ */
 
 export type SegmentKind = 'liaison' | 'stage';
@@ -36,19 +36,19 @@ export type SegmentKind = 'liaison' | 'stage';
 export interface FuelSegment {
   id: string;
   kind: SegmentKind;
-  /** Distance en km. null = champ vide (compté 0). */
+  /** Distance in km. null = empty field (counted as 0). */
   km: number | null;
-  /** true = liaison ajoutée manuellement (supprimable). */
+  /** true = link added manually (removable). */
   optional?: boolean;
 }
 
 export interface FuelInput {
-  /** Consommation en liaison, L/km (ex. 0.20 = 20 L/100 km). */
+  /** Consumption on links, L/km (e.g. 0.20 = 20 L/100 km). */
   linkConsumption: number;
-  /** Consommation en spéciale, L/km (ex. 0.60). */
+  /** Consumption on special stages, L/km (e.g. 0.60). */
   stageConsumption: number;
   segments: FuelSegment[];
-  /** Marge de sécurité en % (0, 5, 10, 15…). */
+  /** Safety margin in % (0, 5, 10, 15…). */
   marginPercent: number;
 }
 
@@ -58,21 +58,21 @@ export interface FuelResult {
   totalKm: number;
   linkLiters: number;
   stageLiters: number;
-  /** Total sans marge. */
+  /** Total without margin. */
   liters: number;
   marginLiters: number;
-  /** Total avec marge — valeur affichée en grand. */
+  /** Total with margin — the value displayed large. */
   litersWithMargin: number;
-  /** Arrondi au litre supérieur — « arrondi conseillé ». */
+  /** Rounded up to the next liter — « recommended rounding ». */
   litersRoundedUp: number;
-  /** Litres par segment, même ordre que l'entrée. */
+  /** Liters per segment, same order as the input. */
   perSegment: number[];
 }
 
 /**
- * Construit le roadbook par défaut : Liaison, ES, Liaison, ES, …, Liaison.
- * stages = 0 → une seule liaison. Conserve les km des segments obligatoires existants (par rang).
- * Les liaisons optionnelles sont supprimées quand le nombre de spéciales change.
+ * Builds the default roadbook: Link, SS, Link, SS, …, Link.
+ * stages = 0 → a single link. Keeps the km of the existing mandatory segments (by rank).
+ * Optional links are removed when the number of special stages changes.
  */
 export function buildSegments(
   stages: number,
@@ -91,9 +91,9 @@ export function buildSegments(
   return out;
 }
 
-/* ---- Édition du roadbook (UI mobile : pas de stepper « nombre de spéciales ») ---- */
+/* ---- Roadbook editing (mobile UI: no « number of special stages » stepper) ---- */
 
-/** Ajoute une ES + la liaison qui la suit en fin de roadbook. */
+/** Adds an SS + the link that follows it at the end of the roadbook. */
 export function addStage(
   segments: FuelSegment[],
   makeId: () => string = () => Math.random().toString(36).slice(2, 10),
@@ -107,8 +107,8 @@ export function addStage(
 }
 
 /**
- * Supprime l'ES `stageId` et la liaison obligatoire qui la suit immédiatement
- * (les liaisons optionnelles ne sont jamais insérées directement après une ES).
+ * Removes the SS `stageId` and the mandatory link that immediately follows it
+ * (optional links are never inserted directly after an SS).
  */
 export function removeStage(segments: FuelSegment[], stageId: string): FuelSegment[] {
   const i = segments.findIndex((s) => s.id === stageId && s.kind === 'stage');
@@ -118,7 +118,7 @@ export function removeStage(segments: FuelSegment[], stageId: string): FuelSegme
   return [...segments.slice(0, i), ...segments.slice(i + count)];
 }
 
-/** Insère une liaison optionnelle juste après le segment `afterId`. */
+/** Inserts an optional link right after the segment `afterId`. */
 export function insertLink(
   segments: FuelSegment[],
   afterId: string,
@@ -133,12 +133,12 @@ export function insertLink(
   ];
 }
 
-/** Supprime une liaison optionnelle (les liaisons obligatoires ne sont pas supprimables). */
+/** Removes an optional link (mandatory links cannot be removed). */
 export function removeLink(segments: FuelSegment[], linkId: string): FuelSegment[] {
   return segments.filter((s) => !(s.id === linkId && s.kind === 'liaison' && s.optional));
 }
 
-/** Libellés affichés : « Liaison n » / « ES n », numérotés séparément dans l'ordre. */
+/** Displayed labels: « Liaison n » / « ES n », numbered separately in order. */
 export function segmentLabels(segments: FuelSegment[]): string[] {
   let l = 0;
   let e = 0;
@@ -173,33 +173,33 @@ export function computeFuel(input: FuelInput): FuelResult {
     liters,
     marginLiters,
     litersWithMargin,
-    // epsilon pour éviter qu'un 27.000000001 flottant ne devienne 28
+    // epsilon so that a floating-point 27.000000001 does not become 28
     litersRoundedUp: Math.max(0, Math.ceil(litersWithMargin - 1e-9)),
     perSegment,
   };
 }
 
 /* ------------------------------------------------------------------ */
-/* 02 — Vitesse roue                                                   */
+/* 02 — Wheel speed                                                    */
 /* ------------------------------------------------------------------ */
 
 export interface WheelInput {
-  /** Régime moteur, tr/min. */
+  /** Engine speed, rpm. */
   rpm: number;
-  /** Boîte : pignon menant / pignon mené (rapport engagé). */
+  /** Gearbox: driving gear / driven gear (engaged ratio). */
   z1: number;
   z2: number;
-  /** Pont : pignon d'attaque / couronne (couple final). */
+  /** Final drive: pinion / crown wheel. */
   z3: number;
   z4: number;
-  /** Diamètre de roue (pneu monté), mm. */
+  /** Wheel diameter (mounted tyre), mm. */
   wheelDiameterMm: number;
-  /** Écrasement du pneu en charge, mm. Défaut historique : 20. */
+  /** Tyre squash under load, mm. Historical default: 20. */
   tyreCrushMm?: number;
 }
 
 export interface WheelResult {
-  /** null si une entrée rend le calcul impossible (Z2 ou Z4 = 0, diamètre utile ≤ 0). */
+  /** null if an input makes the calculation impossible (Z2 or Z4 = 0, effective diameter ≤ 0). */
   kmh: number | null;
   gearRatio: number | null; // Z1/Z2
   finalRatio: number | null; // Z3/Z4
@@ -211,9 +211,9 @@ export interface WheelResult {
 }
 
 /**
- * v [km/h] = rpm × (Z1/Z2) × (Z3/Z4) × (Ø − écrasement)[mm] × π × 6e-5
- * (6e-5 = 60 min/h ÷ 1 000 000 mm/km)
- * Formule identique à l'existant, l'écrasement (20 mm codé en dur) devient un paramètre.
+ * v [km/h] = rpm × (Z1/Z2) × (Z3/Z4) × (Ø − squash)[mm] × π × 6e-5
+ * (6e-5 = 60 min/h ÷ 1,000,000 mm/km)
+ * Same formula as the existing site; the squash (hard-coded 20 mm) becomes a parameter.
  */
 export function computeWheelSpeed(input: WheelInput): WheelResult {
   const crush = input.tyreCrushMm ?? 20;
@@ -236,7 +236,7 @@ export function computeWheelSpeed(input: WheelInput): WheelResult {
   };
 }
 
-/** Table vitesse/régime affichée sous le résultat (par défaut 4 000 → 11 000 tr/min). */
+/** Speed/rpm table displayed under the result (default 4,000 → 11,000 rpm). */
 export function wheelSpeedTable(
   input: Omit<WheelInput, 'rpm'>,
   rpms: number[] = [4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000],
@@ -245,16 +245,16 @@ export function wheelSpeedTable(
 }
 
 /* ------------------------------------------------------------------ */
-/* 03 — Volumétrique                                                   */
+/* 03 — Volumetric                                                     */
 /* ------------------------------------------------------------------ */
 
 export interface DisplacementInput {
-  /** Alésage, mm. */
+  /** Bore, mm. */
   boreMm: number;
-  /** Course, mm. */
+  /** Stroke, mm. */
   strokeMm: number;
   cylinders: number;
-  /** Volume de chambre par cylindre, cm³ (optionnel → pas de rapport volumétrique). */
+  /** Chamber volume per cylinder, cm³ (optional → no compression ratio). */
   chamberCc?: number | null;
 }
 
@@ -263,16 +263,16 @@ export interface DisplacementResult {
   unitCc: number;
   totalCc: number;
   totalLiters: number;
-  /** course / alésage */
+  /** stroke / bore */
   strokeBoreRatio: number | null;
   engineShape: 'super-carré' | 'carré' | 'longue course' | null;
-  /** (Vu + Vc) / Vc — null si pas de volume de chambre. */
+  /** (Vu + Vc) / Vc — null if no chamber volume. */
   compressionRatio: number | null;
 }
 
 /**
- * V unitaire [cm³] = π × alésage² / 4 × course / 1000  (mm³ → cm³)
- * Corrige le bug de l'existant, qui calculait π × √d / 4 × h (√ au lieu de ²).
+ * V unit [cm³] = π × bore² / 4 × stroke / 1000  (mm³ → cm³)
+ * Fixes the existing site's bug, which computed π × √d / 4 × h (√ instead of ²).
  */
 export function computeDisplacement(input: DisplacementInput): DisplacementResult {
   const bore = Math.max(0, input.boreMm);

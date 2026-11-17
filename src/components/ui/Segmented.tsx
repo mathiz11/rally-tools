@@ -1,7 +1,7 @@
 import styles from './Segmented.module.css';
 
 interface SegmentedProps<T extends number | string> {
-  /** Nom du groupe pour les lecteurs d'écran. */
+  /** Group name for screen readers. */
   label: string;
   options: { value: T; label: string }[];
   value: T;
@@ -9,7 +9,7 @@ interface SegmentedProps<T extends number | string> {
   columns?: number;
 }
 
-/** Contrôle segmenté : boutons aria-pressed, 52 px, débordement sur plusieurs lignes au-delà de `columns`. */
+/** Segmented control: aria-pressed buttons, 52 px, wraps onto several rows beyond `columns`. */
 export function Segmented<T extends number | string>({ label, options, value, onChange, columns = 4 }: SegmentedProps<T>) {
   return (
     <div class={styles.group} role="group" aria-label={label} style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>

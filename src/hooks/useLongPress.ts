@@ -2,15 +2,15 @@ import { useCallback, useEffect, useRef } from 'preact/hooks';
 import type { TargetedMouseEvent, TargetedPointerEvent } from 'preact';
 
 interface Options {
-  /** Délai avant répétition (ms). */
+  /** Delay before repeating (ms). */
   delay?: number;
-  /** Intervalle de répétition (ms). */
+  /** Repeat interval (ms). */
   interval?: number;
 }
 
 /**
- * Appui long = répétition (400 ms puis toutes les 80 ms), clic simple = un pas.
- * Clavier : Entrée / Espace déclenchent `click` (detail = 0), géré à part pour éviter le double pas.
+ * Long press = repeat (400 ms, then every 80 ms), single click = one step.
+ * Keyboard: Enter / Space trigger `click` (detail = 0), handled separately to avoid a double step.
  */
 export function useLongPress(action: () => void, { delay = 400, interval = 80 }: Options = {}) {
   const act = useRef(action);
@@ -26,14 +26,14 @@ export function useLongPress(action: () => void, { delay = 400, interval = 80 }:
 
   const step = () => {
     act.current();
-    // Retour haptique léger, sans effet si non supporté ou si l'utilisateur réduit les animations.
+    // Light haptic feedback, no effect if unsupported or if the user reduces motion.
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) navigator.vibrate?.(10);
   };
 
   return {
     onPointerDown(e: TargetedPointerEvent<HTMLButtonElement>) {
       if (e.pointerType === 'mouse' && e.button !== 0) return;
-      e.preventDefault(); // garde le focus (et le clavier ouvert) sur le champ en cours de saisie
+      e.preventDefault(); // keeps focus (and the keyboard open) on the field being edited
       stop();
       step();
       timeout.current = window.setTimeout(() => {
@@ -45,7 +45,7 @@ export function useLongPress(action: () => void, { delay = 400, interval = 80 }:
     onPointerCancel: stop,
     onContextMenu: (e: Event) => e.preventDefault(),
     onClick(e: TargetedMouseEvent<HTMLButtonElement>) {
-      if (e.detail === 0) step(); // activation clavier uniquement
+      if (e.detail === 0) step(); // keyboard activation only
     },
   };
 }

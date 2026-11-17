@@ -5,7 +5,7 @@ import styles from './DetailRows.module.css';
 export interface DetailRow {
   label: string;
   marker?: MarkerKind;
-  /** Valeurs alignées à droite (ex. [« 55,0 km », « 11,00 L »]). */
+  /** Right-aligned values (e.g. [« 55,0 km », « 11,00 L »]). */
   values: string[];
   strong?: boolean;
 }
@@ -30,7 +30,7 @@ export function DetailRows({ rows }: { rows: DetailRow[] }) {
   );
 }
 
-/** Formule affichée en petit sous un détail (principe « honnête »). */
+/** Formula shown in small print under a detail (the « honest » principle). */
 export function Formula({ children }: { children: ComponentChildren }) {
   return <p class={`num ${styles.formula}`}>{children}</p>;
 }

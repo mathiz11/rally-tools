@@ -9,7 +9,7 @@ interface StepperRowProps {
   id: string;
   label: string;
   marker: MarkerKind;
-  /** Équivalence affichée à droite du label (ex. « ≈ 20 L/100 km »). */
+  /** Equivalence shown to the right of the label (e.g. « ≈ 20 L/100 km »). */
   hint?: string;
   value: number;
   onChange: (value: number) => void;
@@ -20,7 +20,7 @@ interface StepperRowProps {
   increaseLabel: string;
 }
 
-/** Label + [ − ] [ valeur éditable ] [ + ] : une seule commande par ligne, cibles 72 × 60 px. */
+/** Label + [ − ] [ editable value ] [ + ]: a single control per row, 72 × 60 px targets. */
 export function StepperRow({
   id,
   label,

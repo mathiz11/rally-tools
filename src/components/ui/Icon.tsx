@@ -21,7 +21,7 @@ interface IconProps extends Omit<SVGAttributes<SVGSVGElement>, 'name' | 'stroke'
   stroke?: number;
 }
 
-/** Icônes SVG au trait, décoratives (aria-hidden) : le libellé est porté par le bouton. */
+/** Line SVG icons, decorative (aria-hidden): the label is carried by the button. */
 export function Icon({ name, size = 22, stroke = 1.8, ...rest }: IconProps) {
   return (
     <svg

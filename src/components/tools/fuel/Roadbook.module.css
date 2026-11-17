@@ -8,7 +8,7 @@
   gap: var(--sp-2);
 }
 
-/* Rail vertical entre le marqueur de départ et celui d'arrivée. */
+/* Vertical rail between the start and finish markers. */
 .list::before {
   content: '';
   position: absolute;

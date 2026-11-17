@@ -1,4 +1,4 @@
-/* Compléments au reset de tokens.css. */
+/* Additions to the tokens.css reset. */
 html,
 body,
 #app {
@@ -6,7 +6,7 @@ body,
 }
 
 body {
-  overflow: hidden; /* le défilement se fait dans la zone de contenu de l'AppShell */
+  overflow: hidden; /* scrolling happens inside the AppShell content area */
   overscroll-behavior: none;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;

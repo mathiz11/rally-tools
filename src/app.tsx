@@ -17,7 +17,7 @@ export function App() {
   const path = usePath();
   const Page = PAGES[path];
 
-  // URL inconnue : retour à l'accueil.
+  // Unknown URL: back to the home page.
   useEffect(() => {
     if (!Page) navigate('/');
   }, [Page]);

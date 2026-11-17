@@ -4,7 +4,7 @@ export interface VolumetricState {
   bore: number;
   stroke: number;
   cylinders: number;
-  /** Volume de chambre par cylindre, cm³ ; null = non renseigné (pas de rapport volumétrique). */
+  /** Chamber volume per cylinder, cm³; null = not provided (no compression ratio). */
   chamber: number | null;
 }
 

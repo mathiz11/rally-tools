@@ -8,7 +8,7 @@ function read(key: string): unknown {
     const raw = localStorage.getItem(key);
     return raw === null ? undefined : JSON.parse(raw);
   } catch {
-    return undefined; // stockage indisponible (navigation privée…) ou JSON corrompu
+    return undefined; // storage unavailable (private browsing…) or corrupted JSON
   }
 }
 
@@ -16,17 +16,17 @@ function write(key: string, value: unknown) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch {
-    /* quota / stockage bloqué : l'outil continue de fonctionner sans persistance */
+    /* quota / storage blocked: the tool keeps working without persistence */
   }
 }
 
 /**
- * État persistant dans localStorage (`rally-tools:v1:<name>`).
- * - `sanitize` reçoit la valeur stockée (inconnue) et renvoie un état valide : tout ce qui est
- *   corrompu ou obsolète retombe sur les valeurs par défaut.
- * - Écriture différée de 300 ms, forcée au changement de page / fermeture de l'onglet.
- * - `reset()` efface la clé et remet les valeurs par défaut.
- * L'app est 100 % côté client (pas de SSR) : la lecture initiale est donc synchrone, sans écart d'hydratation.
+ * Persistent state in localStorage (`rally-tools:v1:<name>`).
+ * - `sanitize` receives the stored (unknown) value and returns a valid state: anything
+ *   corrupted or obsolete falls back to the defaults.
+ * - Writes debounced by 300 ms, forced on page change / tab close.
+ * - `reset()` clears the key and restores the defaults.
+ * The app is 100% client-side (no SSR): the initial read is therefore synchronous, with no hydration mismatch.
  */
 export function usePersistentState<T>(
   name: string,
@@ -43,7 +43,7 @@ export function usePersistentState<T>(
   const latest = useRef(state);
   latest.current = state;
   const dirty = useRef(false);
-  const skipNext = useRef(true); // ne pas réécrire l'état lu au montage
+  const skipNext = useRef(true); // do not rewrite the state read on mount
 
   const flush = useCallback(() => {
     if (dirty.current) {
@@ -66,7 +66,7 @@ export function usePersistentState<T>(
     window.addEventListener('pagehide', flush);
     return () => {
       window.removeEventListener('pagehide', flush);
-      flush(); // changement de route avant la fin du debounce
+      flush(); // route change before the debounce ends
     };
   }, [flush]);
 

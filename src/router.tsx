@@ -4,7 +4,7 @@ import { LEGACY_REDIRECTS, ROUTES } from './routes';
 
 const NAV_EVENT = 'rally:navigate';
 
-/** Chemin normalisé (sans slash final) ; applique les redirections des anciennes URL. */
+/** Normalized path (no trailing slash); applies the legacy URL redirects. */
 function currentPath(): string {
   const raw = location.pathname.replace(/\/+$/, '') || '/';
   const target = LEGACY_REDIRECTS[raw];
@@ -32,7 +32,7 @@ export function usePath(): string {
       window.removeEventListener(NAV_EVENT, sync);
     };
   }, []);
-  // Titre et description alignés sur la route (les pages HTML statiques les portent déjà au premier chargement).
+  // Title and description aligned with the route (the static HTML pages already carry them on first load).
   useEffect(() => {
     const meta = ROUTES.find((r) => r.path === path);
     if (!meta) return;
@@ -50,7 +50,7 @@ interface LinkProps {
   'aria-current'?: 'page';
 }
 
-/** <a href> réel (clic droit, nouvel onglet OK) avec navigation sans rechargement au clic simple. */
+/** Real <a href> (right-click and new tab work) with reload-free navigation on a plain click. */
 export function Link({ href, ...rest }: LinkProps) {
   return (
     <a

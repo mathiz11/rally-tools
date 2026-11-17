@@ -1,18 +1,18 @@
 import { buildSegments, type FuelSegment } from '../../../lib/calculators';
 
 export interface FuelState {
-  /** L/km en liaison. */
+  /** L/km on links. */
   link: number;
-  /** L/km en spéciale. */
+  /** L/km on special stages. */
   stage: number;
-  /** Marge de sécurité, %. */
+  /** Safety margin, %. */
   margin: number;
   segments: FuelSegment[];
 }
 
 export const MARGINS = [0, 5, 10, 15] as const;
 
-/** Valeurs par défaut de la spec : 0,20 / 0,60 L/km, marge 10 %, roadbook pré-rempli avec 2 spéciales. */
+/** Spec default values: 0.20 / 0.60 L/km, 10 % margin, roadbook pre-filled with 2 special stages. */
 export const makeFuelDefaults = (): FuelState => ({
   link: 0.2,
   stage: 0.6,
@@ -33,7 +33,7 @@ function isSegment(v: unknown): v is FuelSegment {
   );
 }
 
-/** Valide l'état relu depuis localStorage ; toute incohérence retombe sur les valeurs par défaut. */
+/** Validates the state read back from localStorage; any inconsistency falls back to the defaults. */
 export function sanitizeFuel(stored: unknown, defaults: FuelState): FuelState {
   if (typeof stored !== 'object' || stored === null) return defaults;
   const s = stored as Record<string, unknown>;

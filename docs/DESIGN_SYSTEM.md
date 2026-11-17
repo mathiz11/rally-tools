@@ -1,151 +1,151 @@
-# Rally Tools — Design system « Roadbook » (mobile first)
+# Rally Tools — "Roadbook" design system (mobile first)
 
-Direction : **l'univers du copilote de rallye**. Fond asphalte sombre, jaune rallye pour tout ce qui compte (résultat, action, focus), deux couleurs de code pour distinguer **liaisons** (acier) et **spéciales** (orange), typo condensée italique façon plaque de rallye, chiffres en mono façon chrono.
+Direction: **the rally co-driver's world**. Dark asphalt background, rally yellow for everything that matters (result, action, focus), two color codes to tell **links** (steel) from **special stages** (orange), condensed italic type like a rally plate, mono digits like a stopwatch.
 
-**Contexte d'usage qui dicte tout : un téléphone, au bord d'une spéciale, en plein soleil, souvent à une main, parfois avec des gants.**
+**Usage context that dictates everything: a phone, at the side of a special stage, in full sun, often one-handed, sometimes with gloves.**
 
-Tokens : `tokens.css` (source de vérité). Maquettes : canvas Design « Rally Tools — refonte ». Les artboards **mobiles** font référence ; les artboards desktop ne servent qu'à la direction visuelle.
+Tokens: `tokens.css` (source of truth). Mockups: Design canvas "Rally Tools — refonte". The **mobile** artboards are the reference; the desktop artboards are for visual direction only.
 
 ---
 
-## 1. Principes
+## 1. Principles
 
-1. **Mobile first, mobile only.** Chaque écran est conçu pour 360–430 px. Le desktop réutilise exactement le même écran, centré.
-2. **Le résultat est le héros.** Un seul chiffre jaune par outil, **toujours visible** dans la ResultBar collante en bas, au-dessus de la tab bar.
-3. **En direct.** Pas de bouton « Calculer », pas de modale.
-4. **Gros doigts.** Cibles ≥ 48 px (les − / + font 72 × 60). **Une seule commande par ligne** pour les steppers : jamais 3 steppers côte à côte.
-5. **Une main.** Les actions fréquentes (− / +, ajout de spéciale, onglets, résultat) sont dans la moitié basse ou en pleine largeur.
-6. **Code couleur constant.** Liaison = `--link` + rond, Spéciale = `--stage` + carré. Couleur + forme : jamais la couleur seule.
-7. **Honnête.** Formule affichée en petit sous chaque détail.
+1. **Mobile first, mobile only.** Every screen is designed for 360–430 px. Desktop reuses exactly the same screen, centered.
+2. **The result is the hero.** One single yellow number per tool, **always visible** in the sticky ResultBar at the bottom, above the tab bar.
+3. **Live.** No « Calculer » button, no modal.
+4. **Big fingers.** Targets ≥ 48 px (− / + are 72 × 60). **One single control per row** for steppers: never 3 steppers side by side.
+5. **One hand.** Frequent actions (− / +, add a special stage, tabs, result) are in the lower half or full width.
+6. **Consistent color code.** Link = `--link` + circle, Special stage = `--stage` + square. Color + shape: never color alone.
+7. **Honest.** Formula displayed in small print under each detail.
 
-## 2. Couleurs
+## 2. Colors
 
 | Token | Hex | Usage |
 |---|---|---|
-| `--bg` | `#0B0C0E` | Fond de page, fond des champs |
-| `--surface` | `#131519` | Cartes, tab bar |
-| `--surface-2` | `#1C1F25` | Boutons − / +, puces liaison, piste des barres |
-| `--line` | `#2A2E36` | Bordures de carte, séparateurs, rail du roadbook |
-| `--line-strong` | `#3A3F49` | Bordure de champ et de bouton |
-| `--text` | `#F2F0EA` | Texte principal |
-| `--text-2` | `#C9CCD2` | Labels de champ, texte secondaire |
-| `--text-3` | `#9AA0AA` | Unités, aides, eyebrows (≥ 7:1 sur `--bg`) |
-| `--accent` | `#FFC81E` | ResultBar, état actif, focus, onglet actif, logo |
-| `--stage` | `#FF6A2B` | Spéciales (ES), bouton « Ajouter une spéciale » |
-| `--link` | `#8FA3B8` | Liaisons |
+| `--bg` | `#0B0C0E` | Page background, field background |
+| `--surface` | `#131519` | Cards, tab bar |
+| `--surface-2` | `#1C1F25` | − / + buttons, link chips, bar tracks |
+| `--line` | `#2A2E36` | Card borders, separators, roadbook rail |
+| `--line-strong` | `#3A3F49` | Field and button border |
+| `--text` | `#F2F0EA` | Main text |
+| `--text-2` | `#C9CCD2` | Field labels, secondary text |
+| `--text-3` | `#9AA0AA` | Units, help text, eyebrows (≥ 7:1 on `--bg`) |
+| `--accent` | `#FFC81E` | ResultBar, active state, focus, active tab, logo |
+| `--stage` | `#FF6A2B` | Special stages (SS), « Ajouter une spéciale » button |
+| `--link` | `#8FA3B8` | Links |
 
-Texte sur jaune ou orange = `#0B0C0E`. Pas de dégradés décoratifs, pas d'ombres (sauf l'anneau de focus). Motifs : **damier** (bande de 6 px en haut d'écran, marqueur « Arrivée ») et **shift-lights** (accueil desktop uniquement).
+Text on yellow or orange = `#0B0C0E`. No decorative gradients, no shadows (except the focus ring). Patterns: **checkerboard** (6 px strip at the top of the screen, « Arrivée » marker) and **shift-lights** (desktop home only).
 
-Le thème sombre est volontaire (lisibilité et batterie). Si les tests au soleil montrent un manque de lisibilité, prévoir plus tard un thème clair à fort contraste. Ce n'est pas dans le périmètre actuel.
+The dark theme is deliberate (readability and battery). If sun tests show a lack of readability, plan a high-contrast light theme later. It is not in the current scope.
 
-## 3. Typographie
+## 3. Typography
 
-| Rôle | Police | Graisse / style | Taille mobile | Notes |
+| Role | Font | Weight / style | Mobile size | Notes |
 |---|---|---|---|---|
-| Hero accueil | Barlow Condensed | 800 italic, uppercase | 52 | line-height 0.9 |
-| Titre d'écran (header) | Barlow Condensed | 800 italic, uppercase | 26 | eyebrow « OUTIL 0x » mono 10 au-dessus |
-| Titre de carte | Barlow Condensed | 700, uppercase | 20 | letter-spacing 0.06em |
-| Label de réglage | Barlow Condensed | 700, uppercase | 18 | avec pastille couleur |
-| Label de champ | Barlow | 600 | 14 | précision en 400 `--text-3` |
-| Valeur saisie | JetBrains Mono | 700 | 22–28 | **≥ 16 px obligatoire** (sinon zoom iOS au focus) |
-| Chiffre ResultBar | JetBrains Mono | 700 | 36 | |
-| Aides, unités | JetBrains Mono / Barlow | 400–500 | 12–13 | |
+| Home hero | Barlow Condensed | 800 italic, uppercase | 52 | line-height 0.9 |
+| Screen title (header) | Barlow Condensed | 800 italic, uppercase | 26 | mono 10 « OUTIL 0x » eyebrow above |
+| Card title | Barlow Condensed | 700, uppercase | 20 | letter-spacing 0.06em |
+| Setting label | Barlow Condensed | 700, uppercase | 18 | with a color dot |
+| Field label | Barlow | 600 | 14 | detail in 400 `--text-3` |
+| Entered value | JetBrains Mono | 700 | 22–28 | **≥ 16 px mandatory** (otherwise iOS zooms on focus) |
+| ResultBar number | JetBrains Mono | 700 | 36 | |
+| Help text, units | JetBrains Mono / Barlow | 400–500 | 12–13 | |
 
-Polices via `next/font/google`, `display: swap`, sous-ensemble `latin`. Nombres toujours formatés en `fr-FR` (`formatFr()`).
+Fonts via `next/font/google`, `display: swap`, `latin` subset. Numbers always formatted in `fr-FR` (`formatFr()`).
 
 ## 4. Layout
 
-### AppShell (tous les écrans d'outil)
+### AppShell (all tool screens)
 ```
-┌ damier 6 px ───────────────────────┐
-│ ←  OUTIL 01 / ESSENCE          ⟲  │  header 60 px, collant
+┌ checkerboard 6 px ─────────────────┐
+│ ←  OUTIL 01 / ESSENCE          ⟲  │  header 60 px, sticky
 ├────────────────────────────────────┤
 │                                    │
-│  cartes empilées, gap 16,          │  zone scrollable
+│  stacked cards, gap 16,            │  scrollable area
 │  padding 16                        │  scroll-padding-bottom = ResultBar + TabBar
 │                                    │
 ├────────────────────────────────────┤
-│ ▇ ResultBar jaune  27,0 L | 28 L ▇ │  collante, marge 0 12 10
+│ ▇ yellow ResultBar 27,0 L | 28 L ▇ │  sticky, margin 0 12 10
 ├────────────────────────────────────┤
 │  Accueil  Essence  Vitesse  Volume │  TabBar 58 px + env(safe-area-inset-bottom)
 └────────────────────────────────────┘
 ```
-- Implémentation : `height: 100dvh`, colonne flex ; header et barres `flex-shrink: 0`, contenu `overflow-y: auto`.
-- **Desktop (≥ 768 px)** : la même colonne en `max-width: 560px; margin-inline: auto`. Fond `--bg` autour. TabBar et ResultBar restent en bas de la colonne. **Pas de 2 colonnes, pas de panneau latéral.**
-- Accueil : header logo, hero court, 3 lignes-outils pleine largeur (76 px), tab bar.
+- Implementation: `height: 100dvh`, flex column; header and bars `flex-shrink: 0`, content `overflow-y: auto`.
+- **Desktop (≥ 768 px)**: the same column with `max-width: 560px; margin-inline: auto`. `--bg` background around it. TabBar and ResultBar stay at the bottom of the column. **No 2 columns, no side panel.**
+- Home: logo header, short hero, 3 full-width tool rows (76 px), tab bar.
 
-## 5. Composants
+## 5. Components
 
-### StepperRow (remplace les steppers en ligne)
-Utilisé pour les consommations (Essence) et le régime (Vitesse roue).
+### StepperRow (replaces inline steppers)
+Used for consumptions (Fuel) and engine speed (Wheel speed).
 ```
 ● LIAISON                 ≈ 20 L/100 km
 ┌──────┐ ┌──────────────────┐ ┌──────┐
-│  −   │ │      0,20        │ │  +   │   60 px de haut
+│  −   │ │      0,20        │ │  +   │   60 px high
 └──────┘ └──────────────────┘ └──────┘
   72 px        flexible         72 px
 ```
-- Ligne de label : pastille + label Condensed 18 uppercase à gauche, équivalence mono 12 `--text-3` à droite.
-- Grille `72px 1fr 72px`, gap 8, hauteur **60 px**, rayon 14.
-- Boutons : fond `--surface-2`, bordure `--line-strong`, icône 26 px stroke 2.6. État pressé : fond `--line`, `scale(.97)`.
-- **Valeur = vrai champ éditable** (`inputmode="decimal"`, centré, mono 700 28 px) : on peut taper directement 0,23 sans appuyer 3 fois.
-- **Appui long** : répétition après 400 ms, toutes les 80 ms ; un clic simple = un pas. `touch-action: manipulation`, `user-select: none` sur les boutons.
-- Une StepperRow par ligne. Plusieurs lignes dans une même carte, séparées de 18 px.
-- Pas : conso 0,01 L/km ; régime 100 tr/min.
+- Label row: dot + Condensed 18 uppercase label on the left, mono 12 `--text-3` equivalence on the right.
+- Grid `72px 1fr 72px`, gap 8, height **60 px**, radius 14.
+- Buttons: `--surface-2` background, `--line-strong` border, 26 px icon stroke 2.6. Pressed state: `--line` background, `scale(.97)`.
+- **Value = real editable field** (`inputmode="decimal"`, centered, mono 700 28 px): you can type 0,23 directly instead of pressing 3 times.
+- **Long press**: repeat after 400 ms, every 80 ms; a single click = one step. `touch-action: manipulation`, `user-select: none` on the buttons.
+- One StepperRow per line. Several rows in the same card, separated by 18 px.
+- Step: consumption 0.01 L/km; engine speed 100 rpm.
 
-### Champ
-- `<input type="text" inputmode="decimal|numeric">` + `<label>` (visible ou `.visually-hidden`). Parsing via `parseDecimal()`.
-- Hauteur 56–60 px, fond `--bg`, bordure `--line-strong`, rayon 12, mono 700 22–26 px. Unité en suffixe à droite (mono 12–13 `--text-3`) ou dans le label (« Alésage mm »).
-- Deux champs maximum par ligne (Z1/Z2, Z3/Z4, Ø/écrasement, alésage/course).
-- Focus : bordure `--accent` + `box-shadow: 0 0 0 3px var(--focus-ring)`.
-- Vide = 0 ou « — » ; erreur (Z2 = 0, etc.) = bordure `--stage` + aide sous le champ. Jamais bloquant.
+### Field
+- `<input type="text" inputmode="decimal|numeric">` + `<label>` (visible or `.visually-hidden`). Parsing via `parseDecimal()`.
+- Height 56–60 px, `--bg` background, `--line-strong` border, radius 12, mono 700 22–26 px. Unit as a right-hand suffix (mono 12–13 `--text-3`) or in the label (« Alésage mm »).
+- Two fields maximum per row (Z1/Z2, Z3/Z4, Ø/squash, bore/stroke).
+- Focus: `--accent` border + `box-shadow: 0 0 0 3px var(--focus-ring)`.
+- Empty = 0 or « — »; error (Z2 = 0, etc.) = `--stage` border + help text under the field. Never blocking.
 
-### Contrôle segmenté
-Boutons `aria-pressed`, **52 px** de haut, rayon 12, mono 700 16–18 px, grille 4 colonnes (débordement sur 2 lignes si plus de 4 options, ex. cylindres 1·2·3·4 / 5·6·8). Actif : fond `--accent`, texte `--on-accent`.
+### Segmented control
+`aria-pressed` buttons, **52 px** high, radius 12, mono 700 16–18 px, 4-column grid (overflow onto 2 rows if more than 4 options, e.g. cylinders 1·2·3·4 / 5·6·8). Active: `--accent` background, `--on-accent` text.
 
-### Roadbook (Essence)
-- Grille `20px 1fr`. Rail 2 px `--line`. Marqueurs : Départ (rond creux), Liaison (rond `--link`), ES (carré `--stage`), Arrivée (damier).
-- Ligne : colonne de 78 px avec la puce (« LIAISON 1 » / « ES 1 », mono 700 11 px) et les litres de la ligne en dessous (mono 12 `--text-3`), puis le champ km (56 px, flexible), puis **une** action de 48 × 56 :
-  - liaison obligatoire → « + » en pointillés (insère une liaison optionnelle après),
-  - liaison optionnelle → corbeille,
-  - ES → corbeille (supprime l'ES **et** la liaison qui la suit).
-- Sous l'arrivée : bouton pleine largeur **« + Ajouter une spéciale »** (60 px, bordure 2 px pointillée `--stage`, texte `--stage` Condensed 800 20 px) qui ajoute ES + liaison en fin de liste.
-- En-tête de carte : « Roadbook » + compteur mono « 2 ES · 77,6 km ».
+### Roadbook (Fuel)
+- Grid `20px 1fr`. 2 px `--line` rail. Markers: Start (hollow circle), Link (`--link` circle), SS (`--stage` square), Finish (checkerboard).
+- Row: 78 px column with the chip (« LIAISON 1 » / « ES 1 », mono 700 11 px) and the row's liters below (mono 12 `--text-3`), then the km field (56 px, flexible), then **one** 48 × 56 action:
+  - mandatory link → dotted « + » (inserts an optional link after it),
+  - optional link → trash,
+  - SS → trash (removes the SS **and** the link that follows it).
+- Below the finish: full-width **« + Ajouter une spéciale »** button (60 px, 2 px dotted `--stage` border, `--stage` text Condensed 800 20 px) that adds SS + link at the end of the list.
+- Card header: « Roadbook » + mono counter « 2 ES · 77,6 km ».
 
 ### ResultBar
-Fond `--accent`, texte `--on-accent`, rayon 14, padding 12×16, `aria-live="polite"`.
-Gauche : eyebrow mono 11 uppercase (« À EMBARQUER · MARGE 10 % ») + valeur mono 700 36 px + unité Condensed. Droite : info secondaire (arrondi 28 L / km/h pour 1 000 tr / rapport volumétrique).
-Toujours visible. Le détail complet est dans la dernière carte de l'écran.
+`--accent` background, `--on-accent` text, radius 14, padding 12×16, `aria-live="polite"`.
+Left: mono 11 uppercase eyebrow (« À EMBARQUER · MARGE 10 % ») + mono 700 36 px value + Condensed unit. Right: secondary info (rounded 28 L / km/h per 1,000 rpm / compression ratio).
+Always visible. The full detail is in the last card of the screen.
 
 ### TabBar
-4 onglets (Accueil, Essence, Vitesse, Volume), icône 22 + label Condensed 13 uppercase, zone ≥ 52 px. Actif : `--accent` + `aria-current="page"`. Fond `--surface`, bordure haute `--line`, `padding-bottom: max(22px, env(safe-area-inset-bottom))`.
+4 tabs (Accueil, Essence, Vitesse, Volume), 22 icon + Condensed 13 uppercase label, target ≥ 52 px. Active: `--accent` + `aria-current="page"`. `--surface` background, `--line` top border, `padding-bottom: max(22px, env(safe-area-inset-bottom))`.
 
-### Header d'outil
-Retour (44 × 44) vers l'accueil, eyebrow « OUTIL 0x » + titre, bouton reset (44 × 44, bordure) à droite avec `aria-label`.
+### Tool header
+Back button (44 × 44) to the home, « OUTIL 0x » eyebrow + title, reset button (44 × 44, bordered) on the right with `aria-label`.
 
-### Carte
-Fond `--surface`, bordure `--line`, rayon 16, padding 16, titre Condensed 700 20 uppercase.
+### Card
+`--surface` background, `--line` border, radius 16, padding 16, Condensed 700 20 uppercase title.
 
-### Table vitesse / régime
-Grille `60px 1fr 56px`, barre 10 px, ligne du régime courant (± 500) en `--accent`, régimes ≥ 10 000 en `--stage`.
+### Speed / rpm table
+Grid `60px 1fr 56px`, 10 px bar, current rpm row (± 500) in `--accent`, rpm ≥ 10,000 in `--stage`.
 
-## 6. Détails mobiles indispensables
+## 6. Essential mobile details
 
 - `<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">`, `theme-color` `#0B0C0E`.
-- `100dvh` (pas `100vh`) ; safe-areas iOS en haut et en bas.
-- Clavier ouvert : la ResultBar peut rester visible (la zone scrollable se réduit) ; garantir que le champ focus reste visible (`scrollIntoView({ block: 'center' })` au focus si nécessaire).
-- `-webkit-tap-highlight-color: transparent` + état pressé visible pour compenser.
-- Retour haptique léger au pas du stepper si `navigator.vibrate` existe (10 ms). Optionnel, désactivable.
-- PWA : manifest + icône, utilisable hors réseau (les spéciales sont souvent en zone blanche) : précache des 4 pages.
+- `100dvh` (not `100vh`); iOS safe areas at top and bottom.
+- Keyboard open: the ResultBar may stay visible (the scrollable area shrinks); make sure the focused field stays visible (`scrollIntoView({ block: 'center' })` on focus if needed).
+- `-webkit-tap-highlight-color: transparent` + visible pressed state to compensate.
+- Light haptic feedback on stepper step if `navigator.vibrate` exists (10 ms). Optional, can be disabled.
+- PWA: manifest + icon, usable offline (special stages are often in dead zones): precache of the 4 pages.
 
-## 7. Iconographie
+## 7. Iconography
 
-SVG inline au trait (stroke 1.8–2.6, `currentColor`, extrémités arrondies), 18–26 px : pompe à essence, compteur, piston, flèche retour, refresh, plus, moins, corbeille, maison. Décoratives → `aria-hidden="true"`. Pas d'emoji.
+Inline line SVGs (stroke 1.8–2.6, `currentColor`, rounded caps), 18–26 px: fuel pump, speedometer, piston, back arrow, refresh, plus, minus, trash, home. Decorative → `aria-hidden="true"`. No emoji.
 
-## 8. Accessibilité (bloquant)
+## 8. Accessibility (blocking)
 
-- Contraste ≥ 4.5:1 (toutes les paires du tableau passent ; `--placeholder` réservé aux placeholders).
-- Vrais `<button>`, `<a href>`, `<input>` + `<label>`. `aria-label` sur tous les boutons icône (« Diminuer la consommation en liaison »…).
-- `aria-live="polite"` sur la ResultBar, `aria-pressed` sur les segments.
-- Focus visible jaune, navigation clavier complète (utile aussi sur tablette avec clavier).
-- `prefers-reduced-motion` respecté ; `lang="fr"`.
+- Contrast ≥ 4.5:1 (all pairs in the table pass; `--placeholder` reserved for placeholders).
+- Real `<button>`, `<a href>`, `<input>` + `<label>`. `aria-label` on all icon buttons (« Diminuer la consommation en liaison »…).
+- `aria-live="polite"` on the ResultBar, `aria-pressed` on segments.
+- Visible yellow focus, full keyboard navigation (also useful on a tablet with a keyboard).
+- `prefers-reduced-motion` respected; `lang="fr"`.

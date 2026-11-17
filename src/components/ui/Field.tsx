@@ -6,17 +6,17 @@ import styles from './Field.module.css';
 interface FieldProps {
   id: string;
   label: ComponentChildren;
-  /** Précision du libellé, en `--text-3`. */
+  /** Label detail, in `--text-3`. */
   labelNote?: string;
   value: number | null;
   onChange: (value: number | null) => void;
   unit?: string;
   inputMode?: 'decimal' | 'numeric';
-  /** Aide sous le champ. */
+  /** Help text under the field. */
   hint?: ComponentChildren;
-  /** Erreur : bordure orange + message sous le champ (jamais bloquant). */
+  /** Error: orange border + message under the field (never blocking). */
   error?: string;
-  /** Libellé uniquement pour les lecteurs d'écran (ex. champs d'une ligne du roadbook). */
+  /** Label for screen readers only (e.g. fields of a roadbook row). */
   hideLabel?: boolean;
   placeholder?: string;
   format?: (v: number) => string;
