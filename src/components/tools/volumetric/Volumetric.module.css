@@ -1,0 +1,24 @@
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+  align-items: start;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.groupLabel {
+  font-weight: 600;
+  font-size: var(--fs-small);
+  color: var(--text-2);
+}
+
+.diagram {
+  display: flex;
+  justify-content: center;
+  padding: var(--sp-2) 0;
+}

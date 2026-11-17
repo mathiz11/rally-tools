@@ -1,0 +1,33 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: var(--app-max);
+  margin-inline: auto;
+  padding-top: env(safe-area-inset-top);
+  background: var(--bg);
+}
+
+@media (min-width: 768px) {
+  .app {
+    border-inline: 1px solid var(--line);
+  }
+}
+
+.strip {
+  height: 6px;
+  flex: none;
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--gutter);
+  scroll-padding-block: var(--sp-6);
+}

@@ -1,0 +1,73 @@
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-setting);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.hint {
+  font-size: var(--fs-micro);
+  color: var(--text-3);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: var(--stepper-btn-w) 1fr var(--stepper-btn-w);
+  gap: var(--sp-2);
+  height: var(--stepper-h);
+}
+
+.btn {
+  display: grid;
+  place-items: center;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-btn);
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.btn:active {
+  background: var(--line);
+  transform: scale(0.97);
+}
+
+.input {
+  min-width: 0;
+  height: 100%;
+  text-align: center;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-btn);
+  outline: 0;
+  font-size: var(--fs-input-lg);
+  font-weight: 700;
+  color: var(--text);
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}

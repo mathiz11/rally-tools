@@ -1,0 +1,113 @@
+.list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+/* Rail vertical entre le marqueur de départ et celui d'arrivée. */
+.list::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 16px;
+  bottom: 16px;
+  width: 2px;
+  background: var(--line);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: center;
+  column-gap: var(--sp-2);
+  min-height: 32px;
+}
+
+.rail {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 100%;
+}
+
+.line {
+  display: grid;
+  grid-template-columns: 78px 1fr 48px;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.liters {
+  font-size: var(--fs-micro);
+  color: var(--text-3);
+}
+
+.terminal {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-setting);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.action {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: var(--field-h);
+  padding: 0;
+  background: var(--surface-2);
+  color: var(--text-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-xl);
+  transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.action:active {
+  background: var(--line);
+  transform: scale(0.97);
+}
+
+.dashed {
+  background: transparent;
+  border-style: dashed;
+  color: var(--text);
+}
+
+.add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  width: 100%;
+  height: 60px;
+  background: transparent;
+  color: var(--stage);
+  border: 2px dashed var(--stage);
+  border-radius: var(--r-btn);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.add:active {
+  background: var(--surface-2);
+  transform: scale(0.99);
+}

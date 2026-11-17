@@ -1,0 +1,15 @@
+.bar {
+  display: flex;
+  height: 12px;
+  background: var(--surface-2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.link {
+  background: var(--link);
+}
+
+.stage {
+  background: var(--stage);
+}

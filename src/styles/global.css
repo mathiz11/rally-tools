@@ -1,0 +1,25 @@
+/* Compléments au reset de tokens.css. */
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  overflow: hidden; /* le défilement se fait dans la zone de contenu de l'AppShell */
+  overscroll-behavior: none;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+input {
+  font: inherit;
+  color: inherit;
+}

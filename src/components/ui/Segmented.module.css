@@ -1,0 +1,26 @@
+.group {
+  display: grid;
+  gap: var(--sp-2);
+}
+
+.seg {
+  height: var(--segment-h);
+  background: var(--bg);
+  color: var(--text-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-xl);
+  font-size: 17px;
+  font-weight: 700;
+  padding: 0;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.seg:active {
+  background: var(--surface-2);
+}
+
+.seg[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}

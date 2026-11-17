@@ -1,0 +1,32 @@
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-2xl);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  flex: none;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-card-title);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.aside {
+  font-size: var(--fs-micro);
+  color: var(--text-3);
+  text-align: right;
+}

@@ -1,0 +1,129 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: var(--header-h);
+  flex: none;
+  padding-inline: var(--gutter);
+  border-bottom: 1px solid var(--line);
+}
+
+.logo {
+  border-radius: var(--r-sm);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding-block: var(--sp-4) var(--sp-2);
+}
+
+.h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: var(--fs-hero);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  color: var(--text-2);
+  max-width: 34ch;
+}
+
+.tools {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.tool {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  min-height: 76px;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-2xl);
+  color: var(--text-3);
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.tool:hover {
+  border-color: var(--line-hover);
+}
+
+.tool:active {
+  background: var(--surface-2);
+}
+
+.toolIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex: none;
+  background: var(--surface-2);
+  border-radius: var(--r-xl);
+  color: var(--accent);
+}
+
+.toolText {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.plate {
+  align-self: flex-start;
+  padding: 0 5px;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: var(--r-xs);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.toolTitle {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: var(--fs-tool-row);
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.toolDesc {
+  font-size: var(--fs-small);
+  color: var(--text-3);
+}
+
+.foot {
+  margin-top: auto;
+  padding-top: var(--sp-4);
+  font-size: var(--fs-micro);
+  color: var(--text-3);
+}

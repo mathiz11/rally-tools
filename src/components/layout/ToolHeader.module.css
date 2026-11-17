@@ -1,0 +1,56 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: var(--header-h);
+  flex: none;
+  padding-inline: var(--sp-3) var(--gutter);
+  border-bottom: 1px solid var(--line);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--r-lg);
+  padding: 0;
+  text-decoration: none;
+}
+
+.bordered {
+  border-color: var(--line-strong);
+}
+
+.icon:active {
+  background: var(--surface-2);
+}
+
+.titles {
+  flex: 1;
+  min-width: 0;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-3);
+  line-height: 1.2;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: var(--fs-screen-title);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
